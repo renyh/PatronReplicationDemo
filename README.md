@@ -25,11 +25,11 @@
 |:----------|---------:|
 | barcode | 读者证条码号，也是读者标识，具备唯一性|
 | state | 读者状态 |
-| readerType | 读者类别 |
+| readerType | 读者类别，如果卡中心不具备可由图书馆分配 |
 | createDate | 创建日期，内容为`RFC 1123`格式 |
 | expireDate | 失效日期，内容为`RFC 1123`格式 |
 | name | 读者姓名 |
-| gender | 读者性别 |
+| gender | 读者性别，内容为“男”或“女”或空 |
 | dateOfBirth | 出生日期，内容为`RFC 1123`格式 |
 | idCardNumber | 身份证号 |
 | department | 单位部门 |
