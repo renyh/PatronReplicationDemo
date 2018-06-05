@@ -1,6 +1,6 @@
 # PatronReplicationDemo
 实现 卡中心 到 dp2系统 账户信息同步
-1. dp2系统中账户信息内容为 XML
+# 1. dp2系统中账户信息内容为 XML
 
 ```
 <root>
@@ -37,3 +37,17 @@
 | address | 地址 |
 | tel | 电话 |
 | email | 电子邮箱 |
+
+# 实现数据同步接口
+需要补充完善[文件](https://github.com/paopaofeng/PatronReplicationDemo/blob/master/PatronReplicationDemo/CardCenterServer.cs)下`GetPatronRecords()`函数。该函数定义如下：
+```
+        public int GetPatronRecords(ref string strPosition, 
+            out string[] records, 
+            out string strError)
+```
+其中返回值有：
+-`-1`：出错
+-`0`：正常获得一批记录，但是尚未获得全部
+-`1`：正常获得最后一批记录
+
+每次返回具体多少条记录，是第三方自己决定的。下一次 dp2library 调用的时候，会用 strPosition 参数表示希望从何处开始获取下一批记录。每次函数返回的时候，都给出了 strPosition 返回值，注意这是个 ref 类型的参数，in out 都会起作用，上一次调用 dp2library 会得到返回的一个 strPosition，正好用到下一次调用，每次都有这个参数用来指定本次需要返回的开始位置。具体字符串里面放什么东西什么格式，由第三方自由发挥，达到循环获取直到全部记录都被获取的目的即可。
