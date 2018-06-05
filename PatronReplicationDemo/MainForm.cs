@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
+using System.Runtime.Remoting.Channels.Ipc;
 using System.Text;
 using System.Windows.Forms;
 

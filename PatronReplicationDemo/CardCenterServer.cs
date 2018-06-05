@@ -30,7 +30,7 @@ namespace PatronReplicationDemo
         }
 
 
-        // ################### 以下两个接口可不实现
+        // ########## 以下两个接口可不实现 #########
 
         // 获得一条读者记录
         // parameters:
