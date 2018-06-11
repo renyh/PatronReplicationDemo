@@ -3,9 +3,9 @@
 # 实现数据同步接口
 需要补充完善 [文件](https://github.com/paopaofeng/PatronReplicationDemo/blob/master/PatronReplicationDemo/CardCenterServer.cs) 下`GetPatronRecords()`函数。该函数定义如下：
 ```
-        public int GetPatronRecords(ref string strPosition, 
-            out string[] records, 
-            out string strError)
+public int GetPatronRecords(ref string strPosition, 
+    out string[] records, 
+    out string strError)
 ```
 其中返回值有：
 
