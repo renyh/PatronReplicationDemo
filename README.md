@@ -9,9 +9,9 @@ public int GetPatronRecords(ref string strPosition,
 ```
 其中返回值有：
 
-- `-1`：出错
-- `0`：正常获得一批记录，但是尚未获得全部
-- `1`：正常获得最后一批记录
+- `-1`：出错，错误内容是 strError 的值。
+- `0`：正常获得一批记录，但是尚未获得全部。
+- `1`：正常获得最后一批记录。
 
 
 - strPosition
