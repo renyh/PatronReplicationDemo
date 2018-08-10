@@ -1,6 +1,8 @@
 # PatronReplicationDemo
 该项目是 dp2系统（dp2Library） 从 卡中心 获得账户信息，并实现账户同步的中间件程序示例程序。相对于 dp2系统（dp2Library），该程序是服务器端，由 .Net 的 Remoting 技术实现，dp2系统（dp2Library）可使用命名管道协议访问，也可以通过 TCP/IP 协议访问。该程序启动后，等待 dp2系统（dp2Library）发起请求。在接收到获得账户信息的请求后，该程序通过实现 `GetPatronRecords()` 函数从卡中心获得账户信息，组织成 XML 格式（格式要求参考 **dp2系统中账户信息内容 XML 记录格式**） 字符串数组返回。
 
+该项目需引用`DigitalPlatform.Interfaces`类库，参考[源码](https://github.com/DigitalPlatform/dp2/tree/master/DigitalPlatform.Interfaces)。
+
 # 获得账户信息函数
 需要补充完善 [文件](https://github.com/paopaofeng/PatronReplicationDemo/blob/master/PatronReplicationDemo/CardCenterServer.cs) 下`GetPatronRecords()`函数。该函数定义如下：
 ```
