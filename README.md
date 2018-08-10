@@ -19,7 +19,7 @@ public int GetPatronRecords(ref string strPosition,
 
 - strPosition
 
-`ref`字符串类型参数，表示获取记录的起始位置，第一次调用时为空`""`，表示从第`一`条开始取数据，函数结束时，需为此参数赋值，表示返回下一次获取数据时的位置。
+`ref`字符串类型参数，表示获取记录的起始位置，第一次调用时为空`""`，表示从第`1`条开始取数据，函数结束时，需为此参数赋值，表示返回下一次获取数据时的位置。
 
 - records
 
@@ -64,7 +64,8 @@ public int GetPatronRecords(ref string strPosition,
 | tel | 电话 |
 | email | 电子邮箱 |
 
-## 函数传入传出参与制与返回值关系对照
+## 函数传入传出参数值与返回值关系对照
+
 假设源数据有 1000 条，分批获取全部数据，每批次 100 条数据，获取数据过程中没有发生错误，那么参数与返回值之间对照关系如下表：
 
 | strPosition 传入 | strPosition 返回 | 函数返回值 | strError |
