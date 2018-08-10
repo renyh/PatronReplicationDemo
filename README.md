@@ -1,6 +1,29 @@
 # PatronReplicationDemo
-实现 卡中心 到 dp2系统 账户信息同步
-# 1. dp2系统中账户信息内容为 XML
+该项目是 dp2系统（dp2Library） 从 卡中心 获得账户信息，并实现账户同步的中间件程序示例程序。相对于 dp2系统（dp2Library），该程序是服务器端，由 .Net 的 Remoting 技术实现，dp2系统（dp2Library）可使用命名管道协议访问，也可以通过 TCP/IP 协议访问。该程序启动后，等待 dp2系统（dp2Library）发起请求。在接收到获得账户信息的请求后，该程序通过实现 `GetPatronRecords()` 函数从卡中心获得账户信息，组织成 XML 格式（格式要求参考 **dp2系统中账户信息内容 XML 记录格式**） 字符串数组返回。
+
+# 获得账户信息函数
+需要补充完善 [文件](https://github.com/paopaofeng/PatronReplicationDemo/blob/master/PatronReplicationDemo/CardCenterServer.cs) 下`GetPatronRecords()`函数。该函数定义如下：
+```
+public int GetPatronRecords(ref string strPosition, 
+    out string[] records, 
+    out string strError)
+```
+其中返回值有：
+
+- `-1`：出错，错误内容是 strError 的值。
+- `0`：正常获得一批记录，但是尚未获得全部。
+- `1`：正常获得最后一批记录。
+
+
+- strPosition
+
+`ref`字符串类型参数，表示获取记录的起始位置，第一次调用时为空`""`，表示从第`一`条开始取数据，函数结束时，需为此参数赋值，表示返回下一次获取数据时的位置。
+
+- records
+
+读者`XML`记录字符串数组。读者记录中的某些字段卡中心可能缺乏对应字段，那么需要在`XML`记录中填入`<元素名 dprms:missing />`，这样不至于引起同步时图书馆读者库中的这些字段被清除。
+
+## dp2系统中账户信息内容 XML 记录格式
 
 ```
 <root>
@@ -21,6 +44,7 @@
   <email>email:</email> 
 </root>
 ```
+### 字段解释
 |  字段名   |  注释  |
 |:----------|---------:|
 | barcode | 读者证条码号，也是读者标识，具备唯一性|
@@ -37,18 +61,3 @@
 | address | 地址 |
 | tel | 电话 |
 | email | 电子邮箱 |
-
-# 实现数据同步接口
-需要补充完善[文件](https://github.com/paopaofeng/PatronReplicationDemo/blob/master/PatronReplicationDemo/CardCenterServer.cs)下`GetPatronRecords()`函数。该函数定义如下：
-```
-        public int GetPatronRecords(ref string strPosition, 
-            out string[] records, 
-            out string strError)
-```
-其中返回值有：
-
-- `-1`：出错
-- `0`：正常获得一批记录，但是尚未获得全部
-- `1`：正常获得最后一批记录
-
-每次返回具体多少条记录，是第三方自己决定的。下一次 dp2library 调用的时候，会用 strPosition 参数表示希望从何处开始获取下一批记录。每次函数返回的时候，都给出了 strPosition 返回值，注意这是个 ref 类型的参数，in out 都会起作用，上一次调用 dp2library 会得到返回的一个 strPosition，正好用到下一次调用，每次都有这个参数用来指定本次需要返回的开始位置。具体字符串里面放什么东西什么格式，由第三方自由发挥，达到循环获取直到全部记录都被获取的目的即可。
