@@ -6,7 +6,9 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
+using System.Runtime.Remoting.Channels.Http;
 using System.Runtime.Remoting.Channels.Ipc;
+using System.Runtime.Remoting.Channels.Tcp;
 using System.Text;
 using System.Windows.Forms;
 
@@ -22,9 +24,30 @@ namespace PatronReplicationDemo
         IChannel m_serverChannel = null;
         void StartRemoteServer()
         {
-            m_serverChannel = new IpcServerChannel("CardCenterChannel");
-            RemotingConfiguration.ApplicationName = "CardCenterServer";
+            // EndRemoteChannel();
+            int nPort = Properties.Settings.Default.Cfgs_serverPort;
 
+            string strProtocol = Properties.Settings.Default.Cfgs_serverProtocol;
+            if (strProtocol.ToLower() == "ipc")
+            {
+                //Instantiate our server channel.
+                m_serverChannel = new IpcServerChannel("CardCenterChannel");
+                RemotingConfiguration.ApplicationName = "CardCenterServer";
+            }
+            else if (strProtocol.ToLower() == "tcp")
+            {
+                m_serverChannel = new TcpServerChannel(nPort);
+            }
+            else if (strProtocol.ToLower() == "http")
+            {
+                m_serverChannel = new HttpChannel(nPort);
+            }
+            else
+            {
+                string strError = "不能识别的协议:" + strProtocol + ",启动协议只能是ipc,tcp,http之一。";
+                MessageBox.Show(this, strError);
+                return;
+            }
             //Register the server channel.
             ChannelServices.RegisterChannel(m_serverChannel, false);
 
@@ -34,6 +57,7 @@ namespace PatronReplicationDemo
                 "CardCenterServer",
                 WellKnownObjectMode.Singleton);
         }
+
 
         private void MainForm_Load(object sender, EventArgs e)
         {
