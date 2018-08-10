@@ -1,6 +1,7 @@
 # PatronReplicationDemo
-实现 卡中心 到 dp2系统 账户信息同步
-# 实现数据同步接口
+该项目是 dp2系统（dp2Library） 从 卡中心 获得账户信息，并实现账户同步的中间件程序示例程序。相对于 dp2系统（dp2Library），该程序是服务器端，由 .Net 的 Remoting 技术实现，dp2系统（dp2Library）可使用命名管道协议访问，也可以通过 TCP/IP 协议访问。该程序启动后，等待 dp2系统（dp2Library）发起请求。在接收到获得账户信息的请求后，该程序通过实现 `GetPatronRecords()` 函数从卡中心获得账户信息，组织成 XML 格式（格式要求参考 **dp2系统中账户信息内容 XML 记录体**） 字符串数组返回。
+
+# 获得账户信息函数
 需要补充完善 [文件](https://github.com/paopaofeng/PatronReplicationDemo/blob/master/PatronReplicationDemo/CardCenterServer.cs) 下`GetPatronRecords()`函数。该函数定义如下：
 ```
 public int GetPatronRecords(ref string strPosition, 
@@ -21,7 +22,8 @@ public int GetPatronRecords(ref string strPosition,
 - records
 
 读者`XML`记录字符串数组。读者记录中的某些字段卡中心可能缺乏对应字段，那么需要在`XML`记录中填入`<元素名 dprms:missing />`，这样不至于引起同步时图书馆读者库中的这些字段被清除。
-## dp2系统中账户信息内容 XML 记录体
+
+## dp2系统中账户信息内容 XML 记录格式
 
 ```
 <root>
