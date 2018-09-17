@@ -9,6 +9,8 @@ dp2系统（dp2Library）可使用命名管道协议访问，也可以通过 TCP
 
 该项目需引用`DigitalPlatform.Interfaces`类库，参考[源码](https://github.com/DigitalPlatform/dp2/tree/master/DigitalPlatform.Interfaces)。
 
+参与同步的读者库不允许馆员手动新增和删除，新增的数据同步后状态会被系统标志为“卡中心已删除”，在dp2手动删除的数据，同步后会被 系统根据卡中心的数据增加。
+
 # 获得账户信息函数
 需要补充完善 [文件](https://github.com/paopaofeng/PatronReplicationDemo/blob/master/PatronReplicationDemo/CardCenterServer.cs) 下`GetPatronRecords()`函数。该函数定义如下：
 ```
