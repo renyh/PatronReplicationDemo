@@ -104,3 +104,14 @@ public int GetPatronRecords(ref string strPosition,
 | 501 | 601 | -1 | [详细的错误原因] |
 
 >获取过程中间出现错误，那么获取数据操作将中断，后面的批次不再继续。
+
+
+***
+```
+<patronReplication interfaceUrl="http://localhost:8899/CardCenterServer" patronDbName="同步读者" idElementName="barcode" />
+<monitors>
+        <patronReplication startTime="16:00" />
+</monitors>
+```
+其中 patronReplication 节点的 interfaceUrl 的属性值是读者同步程序的访问地址；patronDbName 的属性值是参与同步的读者库名，idElementName 的属性值是同步时依据的字段名。
+monitors 节点下的 patronReplication 节点中的 startTime 属性定义自动同步的启动时间。
